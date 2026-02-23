@@ -183,10 +183,11 @@ The following prerequisites are required in your environment to prevent any conf
 
 ### Installation Steps
 
-1. Ensure you’re logged into your cluster as a cluster-admin user, such as `kube:admin` or `system:admin`:
+1. Ensure you’re logged into your cluster as a cluster-admin user:
 
 ```
 oc whoami
+oc get nodes
 ```
 
 2. Copy `charts/maas-code-assistant/values.yaml` to edit it:
