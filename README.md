@@ -190,13 +190,18 @@ oc whoami
 oc get nodes
 ```
 
-2. Copy `charts/maas-code-assistant/values.yaml` to edit it:
+2. Install the developer preview release of Models as a Service.
+   1. Run, from the root of the cloned repository, `./dev-preview/render.sh` and ensure the values look correct for your
+      cluster.
+   2. Apply the rendered developer preview with `oc apply -k dev-preview`.
+
+3. Copy `charts/maas-code-assistant/values.yaml` to edit it:
 
 ```
 cp charts/maas-code-assistant/values.yaml environment.yaml
 ```
 
-3. Edit the file and update the following sections to match your environment:
+4. Edit the file and update the following sections to match your environment:
    1. `global.wildcardDomain` and `global.wildcardCertName`
       1. You can recover the proper values by running the following:
 
@@ -216,7 +221,7 @@ cp charts/maas-code-assistant/values.yaml environment.yaml
       ```
       You should set `selectors` to `app: grafana`.
 
-4. Update the `tiers` section to map your desired user/tier mapping for the default MaaS tiers.
+5. Update the `tiers` section to map your desired user/tier mapping for the default MaaS tiers.
    1. For example, if you have users named “bob,” “sue,” and “tom,” and would like them all to be in the enterprise
       tier, with user “sally” in the premium tier and “frank” in the free tier, use the following value for `tiers`:
 
@@ -235,7 +240,7 @@ cp charts/maas-code-assistant/values.yaml environment.yaml
          - tom
    ```
 
-5. Install the QuickStart with helm:
+6. Install the QuickStart with helm:
 
 ```
 helm install maas-code-assistant ./charts/maas-code-assistant -f environment.yaml
