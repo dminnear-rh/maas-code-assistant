@@ -122,13 +122,21 @@ oc whoami
 
 ### Delete
 
-<!-- CONTRIBUTOR TODO: add uninstall instructions
+To remove the core quickstart components (models, Dev Spaces workspaces, etc.) run the following:
 
-*Section required. Include explicit steps to cleanup QuickStart.*
+```
+helm uninstall maas-code-assistant
+```
 
-Some users may need to reclaim space by removing this QuickStart. Make it easy.
+To remove the Developer Preview of MaaS, run this afterwards:
 
--->
+```
+oc delete -k ./dev-preview
+```
+
+To clean up other dependencies, such as Red Hat Connectivity Link and OpenShift AI, follow their documented
+uninstallation procedures by removing their Operands first, allowing the operators to reconcile and complete removal,
+before uninstalling the operators themselves.
 
 ## References
 
@@ -210,7 +218,7 @@ oc get nodes
    3. Apply the rendered developer preview overlay with the following:
 
       ```
-      oc apply -k dev-preview
+      oc apply -k ./dev-preview
       ```
 
 3. Copy `charts/maas-code-assistant/values.yaml` to edit it:
