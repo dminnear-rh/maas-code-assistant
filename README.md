@@ -108,7 +108,7 @@ deploying the QuickStart with more control._
 1. Git clone QuickStart repository
 
 ``` 
-git clone 
+git clone https://github.com/rh-ai-quickstart/maas-code-assistant.git
 ```
 
 2. cd into the directory
