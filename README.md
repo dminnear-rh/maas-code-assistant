@@ -191,9 +191,17 @@ oc get nodes
 ```
 
 2. Install the developer preview release of Models as a Service.
-   1. Run, from the root of the cloned repository, `./dev-preview/render.sh` and ensure the values look correct for your
-      cluster.
-   2. Apply the rendered developer preview with `oc apply -k dev-preview`.
+   1. Run, from the root of the cloned repository, the following and ensure the values look correct for your cluster:
+
+      ```
+      ./dev-preview/render.sh
+      ```
+
+   2. Apply the rendered developer preview overlay with the following:
+
+      ```
+      oc apply -k dev-preview
+      ```
 
 3. Copy `charts/maas-code-assistant/values.yaml` to edit it:
 
