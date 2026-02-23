@@ -224,8 +224,8 @@ cp charts/maas-code-assistant/values.yaml environment.yaml
       1. You can recover the proper values by running the following:
 
       ```
-      oc get ingresscontroller -n openshift-ingress-operator default -ojsonpath='{.status.domain}'
-      oc get ingresscontroller -n openshift-ingress-operator default -ojsonpath='{.spec.defaultCertificate.name}'
+      oc get ingresscontroller -n openshift-ingress-operator default -ojsonpath='{.status.domain}{"\n"}'
+      oc get ingresscontroller -n openshift-ingress-operator default -ojsonpath='{.spec.defaultCertificate.name}{"\n"}'
       ```
 
    2. `grafana.namespace` and `grafana.selectors`
