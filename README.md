@@ -232,11 +232,11 @@ cp charts/maas-code-assistant/values.yaml environment.yaml
       1. Use the Namespace of your `Grafana` resource for the Grafana Operator.
       2. Set `selectors` to match labels on your `Grafana` instance. For example, if you get the following output:
       ```
-      $ oc get grafana grafana -n grafana -ojsonpath='{.metadata.labels}' | jq .
-      {
-      “app”: “grafana”
-      }
+      oc get grafana grafana -n grafana -ojsonpath='{.metadata.labels}' | jq .
       ```
+      `{`\
+      `  “app”: “grafana”`\
+      `}`\
       You should set `selectors` to `app: grafana`.
 
 5. Update the `tiers` section to map your desired user/tier mapping for the default MaaS tiers.
