@@ -9,7 +9,20 @@ spec:
     - name: http
       port: 80
       protocol: HTTP
-      hostname: maas.{{ .Values.global.wildcardDomain | trimPrefix "apps." }}
+      hostname: maas.{{ .Values.global.wildcardDomain }}
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: https
+      port: 443
+      protocol: HTTPS
+      hostname: maas.{{ .Values.global.wildcardDomain }}
+      tls:
+        certificateRefs:
+        - group: ""
+          kind: Secret
+          name: {{ .Values.global.wildcardCertName }}
+        mode: Terminate
       allowedRoutes:
         namespaces:
           from: All
