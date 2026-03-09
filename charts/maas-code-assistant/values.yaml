@@ -43,7 +43,7 @@ workspace:
       revision: main
     image: registry.redhat.io/devspaces/udi-rhel9:3.25.0
 
-defaultServingImage: registry.redhat.io/rhaiis/vllm-cuda-rhel9:3.2.5
+defaultServingImage: registry.redhat.io/rhaiis/vllm-cuda-rhel9:3.3.0
 
 defaultModelTiers:
   - free

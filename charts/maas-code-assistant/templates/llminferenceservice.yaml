@@ -26,7 +26,7 @@ spec:
   template:
     containers:
       - name: main
-        image: {{ .image | default $.Values.defaultImage }}
+        image: {{ .image | default $.Values.defaultServingImage }}
         command:
           {{- if .command }}
           {{- toYaml .command | nindent 10 }}
