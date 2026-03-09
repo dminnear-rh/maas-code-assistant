@@ -1,0 +1,18 @@
+{{- range $model := .Values.models }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ $model.name }}-model-post-access
+  namespace: {{ $.Values.modelsNamespace }}
+subjects:
+  {{- range $tier := ($model.tiers | default $.Values.defaultModelTiers) }}
+  - kind: Group
+    name: system:serviceaccounts:maas-default-gateway-tier-{{ $tier }}
+    apiGroup: rbac.authorization.k8s.io
+  {{- end }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ $model.name }}-model-post-access
+{{- end }}
