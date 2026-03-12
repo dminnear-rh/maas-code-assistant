@@ -40,6 +40,13 @@ metadata:
   namespace: openshift-ingress
 spec:
   gatewayClassName: openshift-default
+  {{- if .useRoute }}
+  infrastructure:
+    parametersRef:
+      group: ""
+      kind: ConfigMap
+      name: maas-default-gateway-config
+  {{- end }}
   listeners:
     - name: http
       port: 80
@@ -113,6 +120,13 @@ metadata:
   namespace: openshift-ingress
 spec:
   gatewayClassName: openshift-default
+  {{- if .useRoute }}
+  infrastructure:
+    parametersRef:
+      group: ""
+      kind: ConfigMap
+      name: openshift-ai-inference-config
+  {{- end }}
   listeners:
     - name: http
       port: 80
