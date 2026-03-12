@@ -70,6 +70,7 @@ spec:
         namespaces:
           from: All
 {{- end }}
+{{- end }}
 {{- with .Values.gateways.openshiftAiInference }}
 {{- if .create }}
 {{- if .useRoute }}
@@ -141,4 +142,5 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
+{{- end }}
 {{- end }}
