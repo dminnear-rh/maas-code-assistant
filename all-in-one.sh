@@ -8,14 +8,14 @@ if [ -r .env ]; then
 fi
 if [ -z "$ADMIN_PASSWORD" ]; then
   read -rsp 'Enter a password to set for the admin user (will be created): ' ADMIN_PASSWORD
+  echo
   echo "ADMIN_PASSWORD=\"$ADMIN_PASSWORD\"" >> .env
 fi
-echo
 if [ -z "$USER_PASSWORD" ]; then
   read -rsp 'Enter a password to set for the generated users (user1-user5 by default): ' USER_PASSWORD
+  echo
   echo "USER_PASSWORD=\"$USER_PASSWORD\"" >> .env
 fi
-echo
 
 function noisy {
   local censored=()
