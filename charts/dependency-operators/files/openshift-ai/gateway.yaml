@@ -21,7 +21,7 @@ metadata:
   name: maas-default-gateway
   namespace: openshift-ingress
 spec:
-  host: maas.{{ $.Values.global.wildcardDomain }}
+  host: {{ .hostname | default (printf "maas.%s" $.Values.global.wildcardDomain) }}
   port:
     targetPort: 443
   tls:
@@ -52,18 +52,14 @@ spec:
     - name: http
       port: 80
       protocol: HTTP
-      {{- if not .useRoute }}
-      hostname: maas.{{ $.Values.global.wildcardDomain }}
-      {{- end }}
+      hostname: {{ .hostname | default (printf "maas.%s" $.Values.global.wildcardDomain) }}
       allowedRoutes:
         namespaces:
           from: All
     - name: https
       port: 443
       protocol: HTTPS
-      {{- if not .useRoute }}
-      hostname: maas.{{ $.Values.global.wildcardDomain }}
-      {{- end }}
+      hostname: {{ .hostname | default (printf "maas.%s" $.Values.global.wildcardDomain) }}
       tls:
         certificateRefs:
         - group: ""
@@ -102,7 +98,7 @@ metadata:
   name: openshift-ai-inference
   namespace: openshift-ingress
 spec:
-  host: inference.{{ $.Values.global.wildcardDomain }}
+  host: {{ .hostname | default (printf "inference.%s" $.Values.global.wildcardDomain) }}
   port:
     targetPort: 443
   tls:
@@ -133,18 +129,14 @@ spec:
     - name: http
       port: 80
       protocol: HTTP
-      {{- if not .useRoute }}
-      hostname: inference.{{ $.Values.global.wildcardDomain }}
-      {{- end }}
+      hostname: {{ .hostname | default (printf "inference.%s" $.Values.global.wildcardDomain) }}
       allowedRoutes:
         namespaces:
           from: All
     - name: https
       port: 443
       protocol: HTTPS
-      {{- if not .useRoute }}
-      hostname: inference.{{ $.Values.global.wildcardDomain }}
-      {{- end }}
+      hostname: {{ .hostname | default (printf "inference.%s" $.Values.global.wildcardDomain) }}
       tls:
         certificateRefs:
         - group: ""
