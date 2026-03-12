@@ -3,6 +3,11 @@
 set -e
 cd "$(dirname "$(realpath "$0")")"
 
+if [ "$(oc get storageclass -ogo-template='{{ range .items }}{{ if .metadata.annotations }}{{ if eq (index .metadata.annotations "storageclass.kubernetes.io/is-default-class") "true" }}found{{ break }}{{ end }}{{ end }}{{ end }}')" != "found" ]; then
+  echo 'You do not have a default StorageClass. This deployment requires persistent storage. Check the documentation.' >&2
+  exit 1
+fi
+
 if [ -r .env ]; then
   . .env
 fi

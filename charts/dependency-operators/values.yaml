@@ -7,10 +7,6 @@ gateways:
     create: true
     useRoute: false
     hostname: ""
-  openshiftAiInference:
-    create: true
-    useRoute: false
-    hostname: ""
 
 dataScienceCluster:
   create: true
