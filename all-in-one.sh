@@ -82,10 +82,15 @@ else
 fi
 export GATEWAY_USE_ROUTE
 
-eval "cat << EOF > environment.yaml
+if ! [ -f environment.yaml ]; then
+    eval "cat << EOF > environment.yaml
 $(<environment.yaml.tpl)
 EOF
 "
+fi
+
+echo "environment.yaml:"
+cat environment.yaml | sed 's/^/  /'
 
 # Install all dependency operators, and create the DataScienceCluster for RHOAI
 noisy helm upgrade --install --timeout 15m0s \
