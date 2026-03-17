@@ -3,6 +3,8 @@ kind: RateLimitPolicy
 metadata:
   name: gateway-rate-limits
   namespace: openshift-ingress
+  labels:
+    {{- include "maas-code-assistant.labels" . | nindent 4 }}
 spec:
   targetRef:
     group: gateway.networking.k8s.io
