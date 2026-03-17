@@ -4,7 +4,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   labels:
-    {{- include "maas-code-assistant.labels" . | nindent 4 }}
+    {{- include "maas-code-assistant.labels" $ | nindent 4 }}
     opendatahub.io/dashboard: "true"
   name: {{ $model.name }}-view-role
   namespace: {{ $.Values.modelsNamespace }}
@@ -24,7 +24,7 @@ metadata:
   name: {{ $model.name }}-model-get
   namespace: {{ $.Values.modelsNamespace }}
   labels:
-    {{- include "maas-code-assistant.labels" . | nindent 4 }}
+    {{- include "maas-code-assistant.labels" $ | nindent 4 }}
 subjects:
   {{- range $tier := ($model.tiers | default $.Values.defaultModelTiers) }}
   - kind: Group
