@@ -1,3 +1,4 @@
+{{- if .Values.workspace.enabled }}
 {{- range $user := (include "maas-code-assistant.users" . | fromJsonArray) }}
 ---
 kind: DevWorkspace
@@ -28,4 +29,5 @@ spec:
           env:
             - name: CHE_DASHBOARD_URL
               value: https://devspaces.{{ $.Values.global.wildcardDomain }}/dashboard/
+{{- end }}
 {{- end }}
