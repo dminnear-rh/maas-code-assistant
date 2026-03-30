@@ -87,11 +87,17 @@ if ! [ -f environment.yaml ]; then
 $(<environment.yaml.tpl)
 EOF
 "
+  processed=false
+else
+  processed=$(grep '^\s*processed: ' environment.yaml| cut -d: -f2 | tr -d '[:space:]')
 fi
 
-for operator in $(oc get subscriptions -A -ojsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}' 2>/dev/null); do
-  sed -i '/^\s*'"$operator"':$/{n; s/enabled: true/enabled: false/;}' environment.yaml
-done
+if ! $processed; then
+  for operator in $(oc get subscriptions -A -ojsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}' 2>/dev/null); do
+    sed -i '/^\s*'"$operator"':$/{n; s/enabled: true/enabled: false/;}' environment.yaml
+  done
+  sed -i 's/^\(\s*processed:\) false/\1 true/' environment.yaml
+fi
 
 echo "environment.yaml:"
 cat environment.yaml | sed 's/^/  /'

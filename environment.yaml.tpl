@@ -12,6 +12,7 @@ gateways:
     useRoute: ${GATEWAY_USE_ROUTE}
 
 install-operators:
+  processed: false
   operators:
     devspaces:
       enabled: true
