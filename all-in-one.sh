@@ -89,6 +89,10 @@ EOF
 "
 fi
 
+for operator in $(oc get subscriptions -A -ojsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}' 2>/dev/null); do
+  sed -i '/^\s*'"$operator"':$/{n; s/enabled: true/enabled: false/;}' environment.yaml
+done
+
 echo "environment.yaml:"
 cat environment.yaml | sed 's/^/  /'
 
