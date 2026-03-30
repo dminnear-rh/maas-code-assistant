@@ -1,4 +1,5 @@
 {{- range $operator, $config := .Values.operators }}
+{{- if $config.enabled }}
 ---
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
@@ -16,4 +17,5 @@ spec:
   {{- with $config.startingCSV }}
   startingCSV: {{ . }}
   {{- end }}
+{{- end }}
 {{- end }}

@@ -1,5 +1,5 @@
 {{- range $operator, $config := .Values.operators }}
-{{- if $config.namespace }}
+{{- if and $config.enabled $config.namespace }}
 {{- if $config.operatorGroup }}
 {{- if $config.operatorGroup.enabled }}
 ---

@@ -1,4 +1,5 @@
 {{- range $operator, $config := .Values.operators }}
+{{- if $config.enabled }}
 {{- if eq ($config.installPlanApproval | default "Automatic") "Manual" }}
 {{- if not $config.startingCSV }}
 {{- fail "Manual approvals with this chart require pinning a specific CSV with startingCSV for the operator" }}
@@ -74,5 +75,6 @@ spec:
           configMap:
             name: approve-{{ $operator }}-script
             defaultMode: 493
+{{- end }}
 {{- end }}
 {{- end }}

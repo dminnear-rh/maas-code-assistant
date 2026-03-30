@@ -1,5 +1,5 @@
 {{- range $operator, $config := .Values.operators }}
-{{- if $config.namespace }}
+{{- if and $config.enabled $config.namespace }}
 ---
 apiVersion: v1
 kind: Namespace
