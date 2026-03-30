@@ -3,6 +3,9 @@ global:
   wildcardCertName: cert-manager-ingress-cert
   toolsImage: image-registry.openshift-image-registry.svc:5000/openshift/tools:latest
 
+# Kuadrant sometimes misbehaves. Force a job to restart it after a delay post-apply
+restartKuadrant: true
+
 # Manage optional chart prerequisite setup
 openshift-ai:
   enabled: true # This will primarily configure the dashboard to support MaaS in this configuration
