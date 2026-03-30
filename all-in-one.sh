@@ -63,27 +63,27 @@ fi
 export TOOLS_IMAGE
 
 function gateway_use_route {
-    ret=1
-    if ! oc get svc -n openshift-ingress router-default >/dev/null 2>&1; then
-        ret=0
-    fi
-    if [ "$(oc get svc -n openshift-ingress router-default -ojsonpath='{.spec.type}')" != "LoadBalancer" ]; then
-        ret=0
-    fi
-    if [ "$ret" -ne 1 ]; then
-        echo "WARNING: Detected a non-load-balancer ingress configuration. Using a Route to back Gateway API resources." >&2
-    fi
-    return $ret
+  ret=1
+  if ! oc get svc -n openshift-ingress router-default >/dev/null 2>&1; then
+    ret=0
+  fi
+  if [ "$(oc get svc -n openshift-ingress router-default -ojsonpath='{.spec.type}')" != "LoadBalancer" ]; then
+    ret=0
+  fi
+  if [ "$ret" -ne 1 ]; then
+    echo "WARNING: Detected a non-load-balancer ingress configuration. Using a Route to back Gateway API resources." >&2
+  fi
+  return $ret
 }
 if gateway_use_route; then
-    GATEWAY_USE_ROUTE=true
+  GATEWAY_USE_ROUTE=true
 else
-    GATEWAY_USE_ROUTE=false
+  GATEWAY_USE_ROUTE=false
 fi
 export GATEWAY_USE_ROUTE
 
 if ! [ -f environment.yaml ]; then
-    eval "cat << EOF > environment.yaml
+  eval "cat << EOF > environment.yaml
 $(<environment.yaml.tpl)
 EOF
 "
