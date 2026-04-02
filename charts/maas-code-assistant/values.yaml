@@ -61,7 +61,7 @@ workspace:
   devworkspace:
     name: exercises
     projects:
-      repoUrl: https://github.com/rh-aiservices-bu/nvidia-redhat-blueprint-maas.git
+      repoUrl: https://github.com/rh-ai-quickstart/maas-code-assistant.git
       revision: main
     image: registry.redhat.io/devspaces/udi-rhel9:3.25.0
 
