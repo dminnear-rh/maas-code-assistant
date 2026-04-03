@@ -9,9 +9,6 @@ metadata:
   namespace: openshift-ingress
 data:
   service: |
-    metadata:
-      annotations:
-        service.beta.openshift.io/serving-cert-secret-name: maas-default-gateway-service-tls
     spec:
       type: ClusterIP
 ---
@@ -23,10 +20,10 @@ metadata:
 spec:
   host: {{ .hostname | default (printf "maas.%s" $.Values.global.wildcardDomain) }}
   port:
-    targetPort: 443
+    targetPort: 80
   tls:
-    insecureEdgeTerminationPolicy: Redirect
-    termination: reencrypt
+    insecureEdgeTerminationPolicy: Allow
+    termination: edge
   to:
     kind: Service
     name: maas-default-gateway-openshift-default
@@ -61,6 +58,7 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
+    {{- if not .useRoute }}
     - name: https
       port: 443
       protocol: HTTPS
@@ -69,14 +67,11 @@ spec:
         certificateRefs:
         - group: ""
           kind: Secret
-          {{- if .useRoute }}
-          name: maas-default-gateway-service-tls
-          {{- else }}
           name: {{ $.Values.global.wildcardCertName }}
-          {{- end }}
         mode: Terminate
       allowedRoutes:
         namespaces:
           from: All
+    {{- end }}
 {{- end }}
 {{- end }}
