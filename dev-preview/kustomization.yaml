@@ -11,13 +11,13 @@ patches:
     patch: |-
       - op: replace
         path: /spec/listeners/0/hostname
-        value: maas.$INGRESS_DOMAIN
+        value: maas.apps.cluster.code-assistant.rhai-tmm.dev
       - op: replace
         path: /spec/listeners/1/hostname
-        value: maas.$INGRESS_DOMAIN
+        value: maas.apps.cluster.code-assistant.rhai-tmm.dev
       - op: replace
         path: /spec/listeners/1/tls/certificateRefs/0/name
-        value: $INGRESS_CERTIFICATE
+        value: router-cert
   - target:
       kind: Deployment
       name: maas-api

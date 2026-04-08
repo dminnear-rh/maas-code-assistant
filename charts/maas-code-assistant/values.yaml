@@ -3,6 +3,9 @@ global:
   wildcardCertName: cert-manager-ingress-cert
   toolsImage: image-registry.openshift-image-registry.svc:5000/openshift/tools:latest
 
+# Kuadrant sometimes misbehaves. Force a job to restart it after a delay post-apply
+restartKuadrant: true
+
 # Manage optional chart prerequisite setup
 openshift-ai:
   enabled: true # This will primarily configure the dashboard to support MaaS in this configuration
@@ -22,6 +25,12 @@ cluster-monitoring:
 tiers:
   free:
     users: []
+    requestRates:
+      - limit: 5
+        window: 2m
+    tokenRates:
+      - limit: 100
+        window: 1m
   premium:
     users:
       - user1
@@ -29,21 +38,34 @@ tiers:
       - user3
       - user4
       - user5
+    requestRates:
+      - limit: 20
+        window: 2m
+    tokenRates:
+      - limit: 10000
+        window: 1m
   enterprise:
     users:
       - admin
+    requestRates:
+      - limit: 50
+        window: 2m
+    tokenRates:
+      - limit: 20000
+        window: 1m
 
 workspace:
+  enabled: true
   namespacePrefix: wksp
 
   devworkspace:
     name: exercises
     projects:
-      repoUrl: https://github.com/rh-aiservices-bu/nvidia-redhat-blueprint-maas.git
+      repoUrl: https://github.com/rh-ai-quickstart/maas-code-assistant.git
       revision: main
     image: registry.redhat.io/devspaces/udi-rhel9:3.25.0
 
-defaultServingImage: registry.redhat.io/rhaiis/vllm-cuda-rhel9:3.2.5
+defaultServingImage: registry.redhat.io/rhaiis/vllm-cuda-rhel9:3.3.0
 
 defaultModelTiers:
   - free

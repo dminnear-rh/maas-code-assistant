@@ -1,3 +1,4 @@
+{{- if .Values.workspace.enabled }}
 {{- range $user := ((include "maas-code-assistant.users" .) | fromJsonArray)  }}
 ---
 apiVersion: v1
@@ -12,4 +13,5 @@ metadata:
     openshift.io/display-name: "Workspace {{ $user }}"
     openshift.io/description: "Workspace Namespace"
     che.eclipse.org/username: {{ $user }}
+{{- end }}
 {{- end }}
