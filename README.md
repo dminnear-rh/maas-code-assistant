@@ -134,7 +134,7 @@ oc whoami
 ```
 
 4. Run all-in-one.sh. Enter passwords for the admin and user accounts when prompted (these will be saved in the `.env`
-   file after the first run of the script).
+   file after the first run of the script, and you won't be prompted again).
 
 ```
 ./all-in-one.sh
