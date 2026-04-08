@@ -107,11 +107,11 @@ deploying the quickstart with more control._
 - OpenShift cluster has GPUs available
 - The NVIDIA GPU Operator is installed and configured with a ClusterPolicy (or other API) to configure the driver and
   make the resources available to Kubernetes to schedule
-- You do not have other workloads or configurations in the cluster, such as:
-  - An identity provider deployed and configured
-  - Red Hat OpenShift AI installed
-  - Red Hat Connectivity Link deployed and configured
-  - Red Hat OpenShift Dev Spaces deployed
+- You do not have other workloads or configurations in the cluster, meaning:
+  - An identity provider is not deployed or configured
+  - Red Hat OpenShift AI is not installed
+  - Red Hat Connectivity Link is not deployed or configured
+  - Red Hat OpenShift Dev Spaces is not deployed
 
 ### Installation Steps
 
