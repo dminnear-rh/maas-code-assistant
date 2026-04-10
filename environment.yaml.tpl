@@ -4,6 +4,7 @@ global:
   toolsImage: ${TOOLS_IMAGE}
 
 keycloak:
+  removeKubeAdmin: false
   ingressCA: |-
 $(echo "${INGRESS_CA}" | sed 's/^/    /')
 
