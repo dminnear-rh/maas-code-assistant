@@ -140,6 +140,12 @@ oc whoami
 ./all-in-one.sh
 ```
 
+> [!NOTE] This installation will leave the `kubeadmin` user in your cluster, prompting you to select a source to log in
+> from. The `rhbk` option added to this menu is required to use the users and passwords specified above, and to be able
+> to use MaaS models. If you would like to remove the prompt to select an identity provider and have it default to the
+> Red Hat build of Keycloak, you can edit `environment.yaml.tpl` and set `keycloak.removeKubeAdmin` to `true` before
+> running the script.
+
 ### Delete
 
 To remove the core quickstart components (models, Dev Spaces workspaces, etc.) run the following:

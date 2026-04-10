@@ -12,6 +12,7 @@ openshift-ai:
 keycloak:
   enabled: false
   namespace: keycloak
+  removeKubeAdmin: false
 devspaces:
   enabled: false
   namespace: openshift-devspaces
