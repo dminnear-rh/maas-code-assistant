@@ -82,14 +82,20 @@ else
 fi
 export GATEWAY_USE_ROUTE
 
-if ! [ -f environment.yaml ]; then
+if [ -f environment.yaml ]; then
+  if ! grep -qF "$INGRESS_DOMAIN" environment.yaml; then
+    echo "ERROR: You have an environment.yaml file templated, but it doesn't match the cluster you're logged into right now!" >&2
+    echo >&2
+    echo "If it's left over from an old deployment, delete it. Otherwise, ensure you're logged into the correct cluster" >&2
+    exit 1
+  fi
+  processed=$(grep '^\s*processed: ' environment.yaml| cut -d: -f2 | tr -d '[:space:]')
+else
   eval "cat << EOF > environment.yaml
 $(<environment.yaml.tpl)
 EOF
 "
   processed=false
-else
-  processed=$(grep '^\s*processed: ' environment.yaml| cut -d: -f2 | tr -d '[:space:]')
 fi
 
 if ! $processed; then
