@@ -74,7 +74,7 @@ to the code assistant application with OpenShift DevSpaces. For more details cli
 - Helm CLI
 - OpenShift Client CLI
 - Bash shell available in PATH
-- sed available in PATH
+- sed available in PATH (works with macOS/POSIX-only as well as common GNU versions)
 
 ### Required user permissions
 
@@ -107,11 +107,11 @@ deploying the quickstart with more control._
 - OpenShift cluster has GPUs available
 - The NVIDIA GPU Operator is installed and configured with a ClusterPolicy (or other API) to configure the driver and
   make the resources available to Kubernetes to schedule
-- You do not have other workloads or configurations in the cluster, such as:
-  - An identity provider deployed and configured
-  - Red Hat OpenShift AI installed
-  - Red Hat Connectivity Link deployed and configured
-  - Red Hat OpenShift Dev Spaces deployed
+- You do not have other workloads or configurations in the cluster, meaning:
+  - An identity provider is not deployed or configured
+  - Red Hat OpenShift AI is not installed
+  - Red Hat Connectivity Link is not deployed or configured
+  - Red Hat OpenShift Dev Spaces is not deployed
 
 ### Installation Steps
 
@@ -134,11 +134,19 @@ oc whoami
 ```
 
 4. Run all-in-one.sh. Enter passwords for the admin and user accounts when prompted (these will be saved in the `.env`
-   file after the first run of the script).
+   file after the first run of the script, and you won't be prompted again).
 
 ```
 ./all-in-one.sh
 ```
+
+<!-- prettier-ignore -->
+> [!NOTE]
+> This installation will leave the `kubeadmin` user in your cluster, prompting you to select a source to log in
+> from. The `rhbk` option added to this menu is required to use the users and passwords specified above, and to be able
+> to use MaaS models. If you would like to remove the prompt to select an identity provider and have it default to the
+> Red Hat build of Keycloak, you can edit `environment.yaml.tpl` and set `keycloak.removeKubeAdmin` to `true` before
+> running the script.
 
 ### Delete
 
@@ -148,9 +156,10 @@ To remove the core quickstart components (models, Dev Spaces workspaces, etc.) r
 helm uninstall maas-code-assistant
 ```
 
-To clean up other dependencies, such as Red Hat Connectivity Link and OpenShift AI, follow their documented
-uninstallation procedures by removing their Operands first, allowing the operators to reconcile and complete removal,
-before uninstalling the operators themselves.
+To clean up the dependencies, such as
+[OpenShift AI](https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/3.3/html/installing_and_uninstalling_openshift_ai_self-managed/uninstalling-openshift-ai-self-managed_uninstalling-openshift-ai-self-managed),
+follow their documented uninstallation procedures by removing their Operands first, allowing the operators to reconcile
+and complete removal, before uninstalling the operators themselves.
 
 ## References
 
@@ -188,7 +197,9 @@ The following prerequisites are required in your environment to prevent any conf
 - Grafana is deployed and managed through the Grafana Operator, in the `grafana` namespace.
   - An example Grafana operand, with all RBAC and resources wired up to User Workload Monitoring, is available in
     [docs/examples/grafana.yaml](docs/examples/grafana.yaml). It expects that your Grafana Operator installation was
-    namespace scoped, and deployed to the `grafana` namespace, and that your in-cluster registry is configured.
+    namespace scoped, and deployed to the `grafana` namespace, and that your in-cluster registry is configured
+    [as documented](https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/registry/setting-up-and-configuring-the-registry).
+    You can configure it differently to not depend on the registry.
 - Red Hat OpenShift Dev Spaces is deployed,
   [as documented](https://docs.redhat.com/en/documentation/red_hat_openshift_dev_spaces/3.26/html-single/administration_guide/index#installing-devspaces-on-openshift-using-the-web-console).
   - A basic CheCluster resource is configured, as in steps 2 and 3 of the above.
@@ -207,6 +218,12 @@ The following prerequisites are required in your environment to prevent any conf
   [as documented](https://docs.redhat.com/en/documentation/red_hat_connectivity_link/1.2/html/installing_on_openshift_container_platform/rhcl-install-ocp-web-console_connectivity-link).
   - A `Kuadrant` resource has been installed in the `kuadrant-system` namespace,
     [as documented](https://docs.redhat.com/en/documentation/red_hat_connectivity_link/1.2/html/installing_on_openshift_container_platform/install-on-ocp-cmd_connectivity-link#:~:text=To%20create%20your%20Connectivity%20Link%20deployment%2C%20enter%20the%20following%20command%3A).
+  - The `Authorino` resource that gets created from this `Kuadrant` instance has been modified with the following to
+    enable TLS on the Authorino endpoint:
+    ```
+    oc annotate service -n kuadrant-system authorino-authorino-authorization service.beta.openshift.io/serving-cert-secret-name=authorino-server-cert --overwrite
+    oc patch authorino -n kuadrant-system authorino --type=merge --patch '{"spec": {"listener": {"tls": {"enabled": true, "certSecretRef": {"name": "authorino-server-cert"}}}}}'
+    ```
 - You have created the `openshift-default` **GatewayClass** object for Gateway API in OpenShift, and are able to create
   Gateway instances using your cluster's load balancer and infrastructure configuration. See
   [the documentation](https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/ingress_and_load_balancing/configuring-ingress-cluster-traffic#ingress-gateway-api)
@@ -214,6 +231,13 @@ The following prerequisites are required in your environment to prevent any conf
 - You have created the `maas-default-gateway` **Gateway** object in the `openshift-ingress` namespace using an
   infrastructure configuration that is supported for your environment and it shows that it is programmed, when verified
   [as documented](https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/3.3/html/govern_llm_access_with_models-as-a-service/deploy-and-manage-models-as-a-service_maas#prerequisite-verification_maas-deploy).
+  It additionally needs the `opendatahub.io/managed: "false"` label and the `opendadatahub.io/managed: "false"` and
+  `security.opendatahub.io/authorino-tls-bootstrap: "true"` annotations set. Without these, policy enforcement will not
+  work as expected.
+  - An example of some possible `Gateway` configurations is available as a Helm template in this repository, at
+    [charts/dependency-operators/files/openshift-ai/gateway.yaml](charts/dependency-operators/files/openshift-ai/gateway.yaml).
+    You can use this template as the basis of a custom manifest by removing the templating syntax and configuring it to
+    suit your environment.
 
 ### Installation Steps
 
@@ -278,6 +302,8 @@ cp charts/maas-code-assistant/values.yaml environment.yaml
          - sue
          - tom
    ```
+
+   2. If you would like to change the request rates and token rates as well, feel free to do so.
 
 6. Complete any tweaks necessary to the `models` array to ensure the workloads will place on your GPU-enabled nodes.
    This may involve changing the tolerations, adjusting the resources, adding the `nodeSelector` field to each model and

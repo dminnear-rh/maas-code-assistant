@@ -21,7 +21,7 @@ realm:
     count: 5
     password: openshift
 
-removeKubeAdmin: true
+removeKubeAdmin: false
 
 postgresCluster:
   create: true
