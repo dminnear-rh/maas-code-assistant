@@ -42,7 +42,7 @@ OpenShift DevSpaces, a containerized cloud-native IDE included in OpenShift.
 
 ### Architecture diagrams
 
-![Code Assistant w/ MaaS Architecture](docs/images/code-assist-diagram.jpg)
+![Code Assistant w/ MaaS Architecture](docs/images/code-assist-diagram.png)
 
 _This diagram illustrates a models-as-a-service architecture on Red Hat AI including the model deployments in addition
 to the code assistant application with OpenShift DevSpaces. For more details click
