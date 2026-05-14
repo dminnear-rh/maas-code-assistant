@@ -28,6 +28,6 @@ spec:
           sourceMapping: /projects
           env:
             - name: CHE_DASHBOARD_URL
-              value: https://devspaces.{{ $.Values.global.wildcardDomain }}/dashboard/
+              value: https://devspaces.{{ $.Values.global.localClusterDomain }}/dashboard/
 {{- end }}
 {{- end }}

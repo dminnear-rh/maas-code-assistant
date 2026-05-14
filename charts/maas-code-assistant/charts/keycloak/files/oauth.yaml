@@ -25,4 +25,4 @@ spec:
           name: openid-client-secret
         extraScopes: []
         issuer: >-
-          https://{{ .Values.name }}.{{ .Values.global.wildcardDomain }}/realms/{{ .Values.realm.name }}
+          https://{{ .Values.name }}.{{ .Values.global.localClusterDomain }}/realms/{{ .Values.realm.name }}

@@ -18,7 +18,7 @@ metadata:
   name: maas-default-gateway
   namespace: openshift-ingress
 spec:
-  host: {{ .hostname | default (printf "maas.%s" $.Values.global.wildcardDomain) }}
+  host: {{ .hostname | default (printf "maas.%s" $.Values.global.localClusterDomain) }}
   port:
     targetPort: 80
   tls:
@@ -54,7 +54,7 @@ spec:
     - name: http
       port: 80
       protocol: HTTP
-      hostname: {{ .hostname | default (printf "maas.%s" $.Values.global.wildcardDomain) }}
+      hostname: {{ .hostname | default (printf "maas.%s" $.Values.global.localClusterDomain) }}
       allowedRoutes:
         namespaces:
           from: All
@@ -62,7 +62,7 @@ spec:
     - name: https
       port: 443
       protocol: HTTPS
-      hostname: {{ .hostname | default (printf "maas.%s" $.Values.global.wildcardDomain) }}
+      hostname: {{ .hostname | default (printf "maas.%s" $.Values.global.localClusterDomain) }}
       tls:
         certificateRefs:
         - group: ""

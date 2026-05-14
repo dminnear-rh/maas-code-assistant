@@ -8,7 +8,7 @@ metadata:
   labels:
     {{- include "maas-code-assistant.labels" . | nindent 4 }}
 spec:
-  host: {{ .Values.name }}.{{ .Values.global.wildcardDomain }}
+  host: {{ .Values.name }}.{{ .Values.global.localClusterDomain }}
   to:
     kind: Service
     name: {{ .Values.name }}-service
