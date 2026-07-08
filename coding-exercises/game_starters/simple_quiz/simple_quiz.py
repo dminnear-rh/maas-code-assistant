@@ -1,5 +1,5 @@
 # === 🎯 SIMPLE QUIZ GAME - PYTHON VERSION ===
-# 
+#
 # Start by asking Continue's chat:
 # "Create a Python quiz game that:
 # - Has 3 hardcoded questions with answers (like 'What is the capital of France?')
@@ -25,8 +25,3 @@
 # - Timer functionality to make questions time-limited
 # - Categories of questions (history, science, programming)
 # - Difficulty levels with different point values
-
-
-
-
-

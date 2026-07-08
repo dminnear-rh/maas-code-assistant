@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # === 🎯 SIMPLE QUIZ GAME - BASH VERSION ===
-# 
+#
 # Start by asking Continue's chat:
 # "Create a Bash quiz script that:
 # - Has 3 hardcoded questions with answers

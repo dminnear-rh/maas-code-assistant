@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # === 🎯 WORD SCRAMBLE GAME - BASH VERSION ===
-# 
+#
 # Start by asking Continue's chat:
 # "Create a Bash script for a word scramble game that:
 # - Takes a word (like 'python') and scrambles the letters randomly
@@ -26,5 +26,3 @@
 # - Hints after several wrong guesses (e.g., "It's a programming language")
 # - Terminal colors for feedback (green for correct, red for wrong)
 # - Difficulty levels with longer words
-
-

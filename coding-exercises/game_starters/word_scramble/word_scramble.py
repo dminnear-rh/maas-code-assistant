@@ -1,5 +1,5 @@
 # === 🎯 WORD SCRAMBLE GAME - PYTHON VERSION ===
-# 
+#
 # Start by asking Continue's chat:
 # "Create a Python script for a word scramble game that:
 # - Takes a word (like 'python') and scrambles the letters randomly using random.sample()
@@ -25,8 +25,3 @@
 # - Hint system that reveals letters after wrong guesses
 # - Different difficulty levels (short vs long words)
 # - Terminal colors using colorama library for better UX
-
-
-
-
-

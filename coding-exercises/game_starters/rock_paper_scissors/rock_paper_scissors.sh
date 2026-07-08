@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # === 🎯 ROCK PAPER SCISSORS - BASH VERSION ===
-# 
+#
 # Start by asking Continue's chat:
 # "Create a Bash script for rock paper scissors that:
 # - Uses an array ('rock' 'paper' 'scissors') and $RANDOM to pick computer choice

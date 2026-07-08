@@ -1,5 +1,5 @@
 # === 🎯 ROCK PAPER SCISSORS - PYTHON VERSION ===
-# 
+#
 # Start by asking Continue's chat:
 # "Create a Python rock paper scissors game that:
 # - Uses random.choice() to pick the computer's move from ['rock', 'paper', 'scissors']
@@ -26,9 +26,3 @@
 # - Fun victory messages and taunts for different outcomes
 # - Statistics tracking (win percentage, favorite move, etc.)
 # - Play against different AI strategies (random, pattern-based, etc.)
-
-
-
-
-
-
