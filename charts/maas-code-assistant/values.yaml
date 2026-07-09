@@ -65,6 +65,8 @@ workspace:
       repoUrl: https://github.com/rh-ai-quickstart/maas-code-assistant.git
       revision: main
     image: registry.redhat.io/devspaces/udi-rhel9:3.25.0
+    memoryLimit: 4Gi
+    cpuLimit: "4"
 
 defaultServingImage: registry.redhat.io/rhaiis/vllm-cuda-rhel9:3.3.0
 

@@ -25,6 +25,8 @@ spec:
       - name: tooling-container
         container:
           image: {{ $.Values.workspace.devworkspace.image }}
+          memoryLimit: {{ $.Values.workspace.devworkspace.memoryLimit }}
+          cpuLimit: {{ $.Values.workspace.devworkspace.cpuLimit | quote }}
           sourceMapping: /projects
           env:
             - name: CHE_DASHBOARD_URL
